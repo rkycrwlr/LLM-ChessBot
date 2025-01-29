@@ -1,4 +1,3 @@
-import os
 import pickle
 from datasets import load_dataset, Dataset, concatenate_datasets
 import numpy as np
@@ -49,7 +48,7 @@ meta = {
     'itos': itos,
     'stoi': stoi,
 }
-with open(os.path.join(os.path.dirname(__file__), 'meta.pkl'), 'wb') as f:
+with open('meta.pkl', 'wb') as f:
     pickle.dump(meta, f)
 
 dataset = dataset.train_test_split(test_size=0.002)
