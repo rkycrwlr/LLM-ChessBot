@@ -4,14 +4,14 @@ This repository contains the code for training a language model on chess games a
 
 ## Preparing the Data
 
-The data preparation script `prepare_data.py` downloads the chess games dataset from Lichess, processes the games to create sequences of moves, and saves the processed data to a Parquet file. The script also creates a vocabulary of all the unique characters in the dataset and saves it to a pickle file.
+The data preparation script `src/prepare_data.py` downloads the chess games dataset from Lichess, processes the games to create sequences of moves, and saves the processed data to a Parquet file. The script also creates a vocabulary of all the unique characters in the dataset and saves it to a pickle file.
 
 ## Training the Model
 
-The model training script `training.py` loads the processed data and trains a nanoGPT model on the data.
+The model training script `src/training.py` loads the processed data and trains a nanoGPT model on the data.
 
 ```python
-python training.py --config config.json --dataset chess_games.parquet --meta meta.pkl
+python src/training.py --config config.json --dataset chess_games.parquet --meta meta.pkl
 ```
 
 ## Testing the model against Stockfish

@@ -13,7 +13,7 @@ from torch.optim import AdamW
 from datasets import Dataset
 from accelerate import Accelerator
 
-from transformer import GPT
+from model import GPT
 from utils import CfgNode as CN
 
 from tqdm import tqdm
