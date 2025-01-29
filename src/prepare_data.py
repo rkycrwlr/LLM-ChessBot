@@ -6,7 +6,7 @@ from tqdm import tqdm
 
 categories = np.array([1550, 1750, 1950])
 
-def process_pgns(dataset, categories):
+def process_pgns(dataset):
     current_sequence = ""
     max_length = 768  
     for row in dataset["train"]:
