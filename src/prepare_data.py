@@ -51,5 +51,4 @@ meta = {
 with open('meta.pkl', 'wb') as f:
     pickle.dump(meta, f)
 
-dataset = dataset.train_test_split(test_size=0.002)
 dataset.to_parquet('chess_games.parquet')

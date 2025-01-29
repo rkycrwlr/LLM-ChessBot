@@ -110,6 +110,7 @@ def log(text, log="log.txt"):
         f.write(text + '\n')
 
 dataset = Dataset.from_parquet(args.dataset)
+dataset = dataset.train_test_split(test_size=0.002)
 
 tokenized_dataset = dataset.map(
     lambda x : tokenize(x, C.block_size),
