@@ -13,8 +13,8 @@ from torch.optim import AdamW
 from datasets import Dataset
 from accelerate import Accelerator
 
-from model import GPT
-from utils import CfgNode as CN
+from src.transformer import GPT
+from src.utils import CfgNode as CN
 
 from tqdm import tqdm
 import pickle
@@ -104,7 +104,7 @@ def evaluate():
         perplexity = float("inf")
     return loss.item(), perplexity.item()
 
-def log(text, log="log.txt"):
+def log(text, log="log2.txt"):
     print(text)
     with open(log, 'a+') as f:
         f.write(text + '\n')
@@ -132,7 +132,7 @@ accelerator = Accelerator(mixed_precision="fp16")
 
 model, optimizer, train_dataloader, eval_dataloader = accelerator.prepare(model, optimizer, train_dataloader, eval_dataloader)
 
-num_train_epochs = 1
+num_train_epochs = 10
 num_training_steps = len(train_dataloader) * num_train_epochs
 
 lr_scheduler = get_scheduler(
@@ -152,7 +152,6 @@ model.train()
 
 if not os.path.isdir(output_dir):
     os.makedirs(output_dir)
-
 
 for epoch in range(num_train_epochs):
     for step, batch in tqdm(enumerate(train_dataloader, start=1), total=len(train_dataloader), desc="Training"):
@@ -181,10 +180,10 @@ for epoch in range(num_train_epochs):
                 model.train()
                 accelerator.wait_for_everyone()
 
-            if (step % (save_steps * gradient_accumulation_steps) == 0):
-                accelerator.wait_for_everyone()
-                accelerator.save_model(model, f'{output_dir}/{step}.pt')
+    
+    accelerator.wait_for_everyone()
+    accelerator.save_model(model, f'{output_dir}/{epoch+1}')
 
 accelerator.wait_for_everyone()
-accelerator.save_model(model, f'{output_dir}/final.pt')
+accelerator.save_model(model, f'{output_dir}/final')
 
